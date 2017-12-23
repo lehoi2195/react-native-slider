@@ -10,7 +10,8 @@ import {
   StyleSheet,
   PanResponder,
   View,
-  Easing
+  Easing,
+  Platform,
 } from "react-native";
 
 const shallowCompare = require('react-addons-shallow-compare'),
@@ -424,9 +425,9 @@ var Slider = React.createClass({
     var length = this.state.trackSize.width ;
     var thumbLeft = e.nativeEvent.locationX - this.state.trackSize.x ;
     var ratio = thumbLeft / length;
-
-    thumbLeft += gestureState.dx;
-
+    
+    if (Platform.OS === 'android') thumbLeft += gestureState.dy;
+    else thumbLeft += gestureState.dx;
     var ratio = thumbLeft / length;
 
     if (this.props.step) {
